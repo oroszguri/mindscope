@@ -4,467 +4,848 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>MindScope – Önismereti és hangulatelemzés</title>
+<title>MindScope – Ismerd meg önmagad</title>
 
 <style>
-:root {
-    --bg: #f4f7fb;
-    --card: #ffffff;
-    --text: #172033;
-    --muted: #667085;
-    --primary: #6366f1;
-    --primary-dark: #4f46e5;
-    --secondary: #14b8a6;
-    --border: #e4e7ec;
-    --success: #059669;
-    --warning: #d97706;
-    --danger: #dc2626;
-    --shadow: 0 15px 40px rgba(16,24,40,.08);
+:root{
+    --bg:#f5f7ff;
+    --card:#ffffff;
+    --text:#172033;
+    --muted:#667085;
+    --primary:#6366f1;
+    --primary-dark:#4f46e5;
+    --secondary:#14b8a6;
+    --border:#e5e7eb;
+    --danger:#dc2626;
+    --warning:#d97706;
+    --success:#059669;
+    --shadow:0 15px 45px rgba(16,24,40,.08);
+    --radius:24px;
 }
 
-* {
-    box-sizing: border-box;
+*{
+    box-sizing:border-box;
 }
 
-html {
-    scroll-behavior: smooth;
+html{
+    scroll-behavior:smooth;
 }
 
-body {
-    margin: 0;
-    font-family: Inter, Arial, sans-serif;
+body{
+    margin:0;
+    font-family:Inter,Arial,sans-serif;
+    color:var(--text);
     background:
-        radial-gradient(circle at top left, #eef2ff, transparent 35%),
+        radial-gradient(circle at 10% 10%,#e8eaff 0,transparent 30%),
+        radial-gradient(circle at 90% 20%,#dffaf5 0,transparent 25%),
         var(--bg);
-    color: var(--text);
-    line-height: 1.6;
+    min-height:100vh;
 }
 
-header {
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    background: rgba(255,255,255,.92);
-    backdrop-filter: blur(15px);
-    border-bottom: 1px solid var(--border);
+button{
+    font-family:inherit;
 }
 
-nav {
-    max-width: 1150px;
-    margin: auto;
-    padding: 14px 20px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+button,
+.menu-item{
+    -webkit-tap-highlight-color:transparent;
 }
 
-.logo {
-    font-size: 22px;
-    font-weight: 900;
-    color: var(--primary);
+.hidden{
+    display:none!important;
 }
 
-.nav-buttons {
-    display: flex;
-    gap: 8px;
+/* =========================
+   APP
+========================= */
+
+.app{
+    min-height:100vh;
 }
 
-button {
-    border: 0;
-    border-radius: 12px;
-    padding: 12px 18px;
-    cursor: pointer;
-    font-weight: 700;
-    transition: .2s;
-    font-size: 14px;
+/* =========================
+   SIDEBAR
+========================= */
+
+.sidebar{
+    position:fixed;
+    left:0;
+    top:0;
+    bottom:0;
+    width:250px;
+    background:rgba(255,255,255,.94);
+    backdrop-filter:blur(20px);
+    border-right:1px solid var(--border);
+    padding:24px 16px;
+    z-index:100;
+    display:flex;
+    flex-direction:column;
 }
 
-button:hover {
-    transform: translateY(-1px);
+.logo{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    font-size:22px;
+    font-weight:900;
+    color:var(--primary);
+    padding:5px 10px 25px;
 }
 
-button:active {
-    transform: translateY(0);
+.logo-icon{
+    width:40px;
+    height:40px;
+    border-radius:13px;
+    display:grid;
+    place-items:center;
+    color:white;
+    background:linear-gradient(135deg,var(--primary),var(--secondary));
+    box-shadow:0 8px 20px rgba(99,102,241,.25);
 }
 
-.btn-primary {
-    color: white;
-    background: linear-gradient(135deg,var(--primary),var(--primary-dark));
+.menu{
+    display:flex;
+    flex-direction:column;
+    gap:6px;
 }
 
-.btn-secondary {
-    background: #eef2ff;
-    color: var(--primary-dark);
+.menu-label{
+    color:#98a2b3;
+    font-size:11px;
+    font-weight:800;
+    text-transform:uppercase;
+    letter-spacing:1px;
+    padding:15px 12px 7px;
 }
 
-.btn-success {
-    color: white;
-    background: linear-gradient(135deg,#10b981,#059669);
+.menu-item{
+    border:0;
+    background:transparent;
+    color:#475467;
+    text-align:left;
+    width:100%;
+    padding:12px 14px;
+    border-radius:13px;
+    font-size:14px;
+    font-weight:700;
+    cursor:pointer;
+    transition:.2s;
 }
 
-.btn-danger {
-    background: #fee2e2;
-    color: var(--danger);
+.menu-item:hover{
+    background:#f3f4ff;
+    color:var(--primary-dark);
 }
 
-main {
-    max-width: 1100px;
-    margin: auto;
-    padding: 35px 20px 100px;
+.menu-item.active{
+    background:linear-gradient(135deg,#eef2ff,#ecfeff);
+    color:var(--primary-dark);
 }
 
-.hero {
-    text-align: center;
-    padding: 60px 20px 45px;
+.sidebar-bottom{
+    margin-top:auto;
 }
 
-.hero-badge {
-    display: inline-block;
-    padding: 7px 13px;
-    border-radius: 999px;
-    background: #e0e7ff;
-    color: #4338ca;
-    font-weight: 800;
-    font-size: 13px;
-    margin-bottom: 15px;
+/* =========================
+   MAIN
+========================= */
+
+.main{
+    margin-left:250px;
+    min-height:100vh;
 }
 
-h1 {
-    font-size: clamp(40px,7vw,70px);
-    line-height: 1;
-    margin: 0 0 20px;
-    letter-spacing: -2px;
+.topbar{
+    height:70px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:0 35px;
+    background:rgba(255,255,255,.72);
+    backdrop-filter:blur(15px);
+    border-bottom:1px solid var(--border);
+    position:sticky;
+    top:0;
+    z-index:50;
 }
 
-.gradient {
-    background: linear-gradient(90deg,#6366f1,#14b8a6);
-    -webkit-background-clip: text;
-    color: transparent;
+.page-title{
+    font-size:18px;
+    font-weight:800;
 }
 
-.hero p {
-    max-width: 720px;
-    margin: auto;
-    color: var(--muted);
-    font-size: 18px;
+.topbar-right{
+    display:flex;
+    align-items:center;
+    gap:10px;
 }
 
-.hero-buttons {
-    margin-top: 28px;
-    display: flex;
-    justify-content: center;
-    gap: 12px;
-    flex-wrap: wrap;
+.status-pill{
+    background:#ecfdf3;
+    color:#027a48;
+    padding:7px 12px;
+    border-radius:999px;
+    font-size:12px;
+    font-weight:800;
 }
 
-.section {
-    margin-top: 35px;
+.mobile-menu{
+    display:none;
+    border:0;
+    background:#f3f4ff;
+    width:42px;
+    height:42px;
+    border-radius:12px;
+    font-size:20px;
+    cursor:pointer;
 }
 
-.card {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 24px;
-    padding: 28px;
-    box-shadow: var(--shadow);
-    margin-bottom: 25px;
+.content{
+    max-width:1150px;
+    margin:auto;
+    padding:40px 28px 80px;
 }
 
-.card h2 {
-    margin-top: 0;
+/* =========================
+   VIEWS
+========================= */
+
+.view{
+    display:none;
+    animation:pageIn .4s ease;
 }
 
-.muted {
-    color: var(--muted);
+.view.active{
+    display:block;
 }
 
-/* PRICING */
-
-.pricing-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit,minmax(270px,1fr));
-    gap: 20px;
+@keyframes pageIn{
+    from{
+        opacity:0;
+        transform:translateY(12px);
+    }
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
 }
 
-.price-card {
-    border: 2px solid var(--border);
-    border-radius: 22px;
-    padding: 28px;
-    position: relative;
+/* =========================
+   HERO
+========================= */
+
+.hero{
+    min-height:650px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    position:relative;
+    overflow:hidden;
+    text-align:center;
 }
 
-.price-card.featured {
-    border-color: var(--primary);
-    box-shadow: 0 15px 35px rgba(99,102,241,.15);
+.hero-orb{
+    position:absolute;
+    border-radius:50%;
+    filter:blur(2px);
+    animation:float 7s ease-in-out infinite;
 }
 
-.price-badge {
-    position: absolute;
-    right: 18px;
-    top: 18px;
-    background: #e0e7ff;
-    color: #4338ca;
-    border-radius: 99px;
-    padding: 5px 10px;
-    font-size: 12px;
-    font-weight: 800;
+.orb1{
+    width:180px;
+    height:180px;
+    background:rgba(99,102,241,.14);
+    top:50px;
+    left:5%;
 }
 
-.price {
-    font-size: 42px;
-    font-weight: 900;
-    margin: 15px 0;
+.orb2{
+    width:130px;
+    height:130px;
+    background:rgba(20,184,166,.14);
+    right:8%;
+    top:130px;
+    animation-delay:1s;
 }
 
-.price small {
-    font-size: 15px;
-    color: var(--muted);
+.orb3{
+    width:90px;
+    height:90px;
+    background:rgba(236,72,153,.10);
+    bottom:70px;
+    left:18%;
+    animation-delay:2s;
 }
 
-.feature-list {
-    padding: 0;
-    list-style: none;
+@keyframes float{
+    0%,100%{
+        transform:translateY(0) translateX(0);
+    }
+    50%{
+        transform:translateY(-25px) translateX(10px);
+    }
 }
 
-.feature-list li {
-    margin: 10px 0;
+.hero-content{
+    position:relative;
+    z-index:2;
+    max-width:780px;
 }
 
-/* MOOD */
-
-.mood-grid {
-    display: grid;
-    grid-template-columns: repeat(5,1fr);
-    gap: 10px;
+.badge{
+    display:inline-flex;
+    align-items:center;
+    gap:7px;
+    background:#eef2ff;
+    color:#4338ca;
+    padding:8px 14px;
+    border-radius:999px;
+    font-size:13px;
+    font-weight:800;
+    margin-bottom:20px;
 }
 
-.mood-button {
-    padding: 18px 8px;
-    background: #f8fafc;
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    font-size: 27px;
+.hero h1{
+    margin:0;
+    font-size:clamp(42px,7vw,76px);
+    line-height:.98;
+    letter-spacing:-3px;
 }
 
-.mood-button span {
-    display: block;
-    font-size: 12px;
-    margin-top: 4px;
+.gradient{
+    background:linear-gradient(90deg,#6366f1,#14b8a6);
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
 }
 
-.mood-button.selected {
-    background: #eef2ff;
-    border: 2px solid var(--primary);
+.hero p{
+    color:var(--muted);
+    max-width:650px;
+    margin:25px auto;
+    font-size:18px;
 }
 
-/* QUESTIONNAIRE */
-
-.progress-container {
-    margin-bottom: 25px;
+.hero-buttons{
+    display:flex;
+    justify-content:center;
+    gap:12px;
+    flex-wrap:wrap;
 }
 
-.progress-info {
-    display: flex;
-    justify-content: space-between;
-    color: var(--muted);
-    font-size: 14px;
-    margin-bottom: 8px;
+/* =========================
+   BUTTONS
+========================= */
+
+.btn{
+    border:0;
+    border-radius:14px;
+    padding:13px 20px;
+    font-weight:800;
+    cursor:pointer;
+    transition:.2s;
 }
 
-.progress {
-    width: 100%;
-    height: 10px;
-    background: #e5e7eb;
-    border-radius: 99px;
-    overflow: hidden;
+.btn:hover{
+    transform:translateY(-2px);
 }
 
-.progress-bar {
-    height: 100%;
-    width: 0%;
-    background: linear-gradient(90deg,var(--primary),var(--secondary));
-    transition: .3s;
+.btn-primary{
+    color:white;
+    background:linear-gradient(135deg,var(--primary),var(--primary-dark));
+    box-shadow:0 10px 25px rgba(99,102,241,.25);
 }
 
-.question {
-    padding: 28px 0;
-    border-bottom: 1px solid var(--border);
+.btn-secondary{
+    color:#4338ca;
+    background:#eef2ff;
 }
 
-.question:last-child {
-    border-bottom: 0;
+.btn-light{
+    color:#344054;
+    background:white;
+    border:1px solid var(--border);
 }
 
-.question-title {
-    font-size: 17px;
-    font-weight: 800;
-    margin-bottom: 15px;
+.btn-success{
+    color:white;
+    background:linear-gradient(135deg,#10b981,#059669);
 }
 
-.question-number {
-    color: var(--primary);
-    margin-right: 5px;
+.btn-danger{
+    color:#b42318;
+    background:#fef3f2;
 }
 
-.options {
-    display: grid;
-    gap: 10px;
+/* =========================
+   CARDS
+========================= */
+
+.card{
+    background:rgba(255,255,255,.94);
+    border:1px solid var(--border);
+    border-radius:var(--radius);
+    padding:28px;
+    box-shadow:var(--shadow);
+    margin-bottom:20px;
 }
 
-.option {
-    border: 1px solid var(--border);
-    border-radius: 14px;
-    padding: 14px 15px;
-    cursor: pointer;
-    transition: .2s;
-    background: white;
+.card h2{
+    margin-top:0;
 }
 
-.option:hover {
-    border-color: var(--primary);
-    background: #f8faff;
+.muted{
+    color:var(--muted);
 }
 
-.option input {
-    margin-right: 10px;
-    accent-color: var(--primary);
+/* =========================
+   HOME CARDS
+========================= */
+
+.feature-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:18px;
+    margin-top:30px;
 }
 
-.category-title {
-    margin-top: 38px;
-    margin-bottom: 4px;
-    color: var(--primary-dark);
+.feature{
+    background:white;
+    border:1px solid var(--border);
+    border-radius:20px;
+    padding:23px;
+    box-shadow:var(--shadow);
+    transition:.25s;
 }
 
-/* RESULTS */
-
-.result {
-    display: none;
+.feature:hover{
+    transform:translateY(-5px);
 }
 
-.score-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit,minmax(210px,1fr));
-    gap: 15px;
+.feature-icon{
+    font-size:30px;
+    margin-bottom:12px;
 }
 
-.score-card {
-    padding: 20px;
-    border-radius: 18px;
-    background: #f8fafc;
-    border: 1px solid var(--border);
+.feature h3{
+    margin:5px 0;
 }
 
-.score-number {
-    font-size: 34px;
-    font-weight: 900;
-    color: var(--primary);
+.feature p{
+    color:var(--muted);
+    font-size:14px;
 }
 
-.score-bar {
-    height: 8px;
-    background: #e5e7eb;
-    border-radius: 20px;
-    overflow: hidden;
-    margin-top: 10px;
+/* =========================
+   SECTION HEADER
+========================= */
+
+.section-head{
+    margin-bottom:25px;
 }
 
-.score-fill {
-    height: 100%;
-    background: linear-gradient(90deg,#6366f1,#14b8a6);
+.section-head h1{
+    margin:0 0 7px;
+    font-size:36px;
 }
 
-.recommendation {
-    padding: 18px;
-    border-radius: 15px;
-    background: #f8fafc;
-    border-left: 5px solid var(--secondary);
-    margin: 12px 0;
+.section-head p{
+    margin:0;
+    color:var(--muted);
 }
 
-.alert {
-    padding: 18px;
-    border-radius: 15px;
-    margin-top: 20px;
+/* =========================
+   TEST
+========================= */
+
+.test-progress{
+    margin-bottom:25px;
 }
 
-.alert-warning {
-    background: #fffbeb;
-    border: 1px solid #fde68a;
-    color: #92400e;
+.progress-top{
+    display:flex;
+    justify-content:space-between;
+    color:var(--muted);
+    font-size:13px;
+    margin-bottom:8px;
 }
 
-.alert-danger {
-    background: #fef2f2;
-    border: 1px solid #fecaca;
-    color: #991b1b;
+.progress{
+    width:100%;
+    height:9px;
+    border-radius:20px;
+    background:#e5e7eb;
+    overflow:hidden;
 }
 
-.hidden {
-    display: none !important;
+.progress-bar{
+    height:100%;
+    width:0;
+    background:linear-gradient(90deg,var(--primary),var(--secondary));
+    transition:.3s;
 }
 
-/* DAILY */
-
-.daily-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit,minmax(180px,1fr));
-    gap: 15px;
+.question-card{
+    max-width:800px;
+    margin:0 auto;
 }
 
-.stat {
-    padding: 20px;
-    background: #f8fafc;
-    border-radius: 18px;
-    border: 1px solid var(--border);
+.question-category{
+    color:var(--primary);
+    font-size:13px;
+    font-weight:800;
+    text-transform:uppercase;
+    letter-spacing:.8px;
 }
 
-.stat-number {
-    font-size: 30px;
-    font-weight: 900;
-    color: var(--primary);
+.question-number{
+    color:var(--muted);
+    font-size:13px;
+    margin-top:5px;
 }
 
-/* FOOTER */
-
-footer {
-    text-align: center;
-    color: var(--muted);
-    padding: 30px;
+.question-text{
+    font-size:25px;
+    line-height:1.3;
+    font-weight:800;
+    margin:20px 0 25px;
 }
 
-/* MOBILE */
+.answer-list{
+    display:grid;
+    gap:11px;
+}
 
-@media(max-width:650px) {
+.answer{
+    width:100%;
+    border:1px solid var(--border);
+    background:#fff;
+    padding:16px;
+    border-radius:15px;
+    text-align:left;
+    cursor:pointer;
+    font-weight:700;
+    transition:.2s;
+}
 
-    main {
-        padding: 15px 12px 60px;
+.answer:hover{
+    border-color:#a5b4fc;
+    background:#f8faff;
+}
+
+.answer.selected{
+    border-color:var(--primary);
+    background:#eef2ff;
+    color:#4338ca;
+}
+
+.test-buttons{
+    display:flex;
+    justify-content:space-between;
+    margin-top:25px;
+}
+
+/* =========================
+   RESULTS
+========================= */
+
+.score-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(210px,1fr));
+    gap:15px;
+}
+
+.score-card{
+    border:1px solid var(--border);
+    border-radius:18px;
+    padding:20px;
+    background:#fafbff;
+}
+
+.score-name{
+    font-size:14px;
+    font-weight:800;
+}
+
+.score-number{
+    font-size:34px;
+    font-weight:900;
+    color:var(--primary);
+    margin:5px 0;
+}
+
+.score-bar{
+    height:8px;
+    background:#e5e7eb;
+    border-radius:10px;
+    overflow:hidden;
+}
+
+.score-fill{
+    height:100%;
+    background:linear-gradient(90deg,var(--primary),var(--secondary));
+}
+
+.result-message{
+    padding:18px;
+    border-radius:16px;
+    background:#f8fafc;
+    margin-top:20px;
+}
+
+/* =========================
+   CHECK IN
+========================= */
+
+.checkin-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:18px;
+}
+
+.checkin-card{
+    background:white;
+    border:1px solid var(--border);
+    border-radius:20px;
+    padding:23px;
+}
+
+.checkin-title{
+    font-weight:800;
+    margin-bottom:15px;
+}
+
+.range-wrap{
+    display:flex;
+    align-items:center;
+    gap:15px;
+}
+
+input[type=range]{
+    width:100%;
+    accent-color:var(--primary);
+}
+
+.range-number{
+    min-width:45px;
+    text-align:center;
+    font-size:22px;
+    font-weight:900;
+    color:var(--primary);
+}
+
+/* =========================
+   HISTORY
+========================= */
+
+.history-list{
+    display:grid;
+    gap:12px;
+}
+
+.history-item{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:16px;
+    border:1px solid var(--border);
+    border-radius:15px;
+    background:#fafbff;
+}
+
+.history-score{
+    font-weight:900;
+    color:var(--primary);
+}
+
+/* =========================
+   TIPS
+========================= */
+
+.tip-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:18px;
+}
+
+.tip{
+    border:1px solid var(--border);
+    background:white;
+    border-radius:20px;
+    padding:23px;
+    cursor:pointer;
+    transition:.2s;
+}
+
+.tip:hover{
+    transform:translateY(-3px);
+    box-shadow:var(--shadow);
+}
+
+.tip-icon{
+    font-size:30px;
+}
+
+.tip-content{
+    display:none;
+    color:var(--muted);
+    margin-top:12px;
+    font-size:14px;
+}
+
+.tip.open .tip-content{
+    display:block;
+}
+
+/* =========================
+   PREMIUM
+========================= */
+
+.premium{
+    background:
+        radial-gradient(circle at 80% 10%,rgba(20,184,166,.2),transparent 25%),
+        linear-gradient(135deg,#171744,#312e81);
+    color:white;
+    border-radius:30px;
+    padding:45px;
+    position:relative;
+    overflow:hidden;
+}
+
+.premium h1{
+    font-size:45px;
+    margin:0 0 12px;
+}
+
+.premium p{
+    color:#dbeafe;
+}
+
+.price{
+    font-size:48px;
+    font-weight:900;
+    margin:25px 0;
+}
+
+.price small{
+    font-size:15px;
+    font-weight:600;
+    color:#c7d2fe;
+}
+
+.premium-list{
+    display:grid;
+    gap:12px;
+    margin:25px 0;
+}
+
+.premium-list div{
+    color:#e0e7ff;
+}
+
+/* =========================
+   SETTINGS
+========================= */
+
+.setting{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:18px 0;
+    border-bottom:1px solid var(--border);
+}
+
+.setting:last-child{
+    border-bottom:0;
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+.overlay{
+    display:none;
+}
+
+@media(max-width:850px){
+
+    .sidebar{
+        transform:translateX(-100%);
+        transition:.25s;
+        box-shadow:10px 0 40px rgba(0,0,0,.12);
     }
 
-    .card {
-        padding: 20px;
-        border-radius: 18px;
+    .sidebar.open{
+        transform:translateX(0);
     }
 
-    nav {
-        padding: 11px 12px;
+    .overlay{
+        position:fixed;
+        inset:0;
+        background:rgba(15,23,42,.35);
+        z-index:90;
     }
 
-    .nav-buttons button {
-        padding: 9px 10px;
+    .overlay.show{
+        display:block;
     }
 
-    .mood-grid {
-        grid-template-columns: repeat(5,1fr);
+    .main{
+        margin-left:0;
     }
 
-    .mood-button {
-        font-size: 21px;
-        padding: 12px 3px;
+    .mobile-menu{
+        display:block;
     }
 
-    .hero {
-        padding: 40px 10px;
+    .topbar{
+        padding:0 16px;
+    }
+
+    .content{
+        padding:25px 15px 60px;
+    }
+
+    .feature-grid,
+    .checkin-grid,
+    .tip-grid{
+        grid-template-columns:1fr;
+    }
+
+    .hero{
+        min-height:600px;
+    }
+
+    .hero h1{
+        letter-spacing:-2px;
+    }
+
+    .premium{
+        padding:30px 22px;
+    }
+}
+
+@media(max-width:500px){
+
+    .status-pill{
+        display:none;
+    }
+
+    .card{
+        padding:20px;
+        border-radius:20px;
+    }
+
+    .question-text{
+        font-size:21px;
+    }
+
+    .test-buttons{
+        gap:8px;
+    }
+
+    .test-buttons .btn{
+        flex:1;
     }
 }
 </style>
@@ -472,386 +853,681 @@ footer {
 
 <body>
 
-<header>
-<nav>
+<div class="app">
+
+<!-- =========================
+     SIDEBAR
+========================= -->
+
+<aside class="sidebar" id="sidebar">
 
     <div class="logo">
-        🧠 MindScope
+        <div class="logo-icon">🧠</div>
+        MindScope
     </div>
 
-    <div class="nav-buttons">
-        <button class="btn-secondary" onclick="scrollToSection('questionnaire')">
-            Kérdőív
+    <div class="menu">
+
+        <div class="menu-label">Főmenü</div>
+
+        <button class="menu-item active" data-view="home">
+            🏠 Kezdőlap
         </button>
 
-        <button class="btn-primary" onclick="scrollToSection('pricing')">
-            Prémium
+        <button class="menu-item" data-view="test">
+            🧠 Önismereti teszt
         </button>
+
+        <button class="menu-item" data-view="results">
+            📊 Eredmények
+        </button>
+
+        <button class="menu-item" data-view="checkin">
+            🌱 Napi állapot
+        </button>
+
+        <button class="menu-item" data-view="progress">
+            📈 Haladás
+        </button>
+
+        <div class="menu-label">Felfedezés</div>
+
+        <button class="menu-item" data-view="tips">
+            💡 Tippek
+        </button>
+
+        <button class="menu-item" data-view="premium">
+            ⭐ Prémium
+        </button>
+
     </div>
 
-</nav>
+    <div class="sidebar-bottom">
+
+        <button class="menu-item" data-view="settings">
+            ⚙️ Beállítások
+        </button>
+
+    </div>
+
+</aside>
+
+<div class="overlay" id="overlay"></div>
+
+<!-- =========================
+     MAIN
+========================= -->
+
+<div class="main">
+
+<header class="topbar">
+
+    <div style="display:flex;align-items:center;gap:12px">
+
+        <button class="mobile-menu" id="mobileMenu">
+            ☰
+        </button>
+
+        <div class="page-title" id="pageTitle">
+            Kezdőlap
+        </div>
+
+    </div>
+
+    <div class="topbar-right">
+        <div class="status-pill">
+            ● Helyben mentve
+        </div>
+    </div>
+
 </header>
 
 
-<main>
+<main class="content">
 
-<!-- HERO -->
+<!-- =========================
+     HOME
+========================= -->
 
-<section class="hero">
+<section class="view active" id="view-home">
 
-    <span class="hero-badge">
-        🌱 Önismeret • Hangulat • Mindennapok
-    </span>
+    <div class="hero">
 
-    <h1>
-        Ismerd meg<br>
-        <span class="gradient">önmagad egy kicsit jobban.</span>
-    </h1>
+        <div class="hero-orb orb1"></div>
+        <div class="hero-orb orb2"></div>
+        <div class="hero-orb orb3"></div>
 
-    <p>
-        A MindScope segít átgondolni a hangulatodat,
-        a stresszt, az alvást, a motivációt és a mindennapi
-        szokásaidat – egyszerű, érthető formában.
-    </p>
+        <div class="hero-content">
 
-    <div class="hero-buttons">
+            <div class="badge">
+                ✦ Önismereti tér a mindennapokhoz
+            </div>
 
-        <button class="btn-primary" onclick="startQuestionnaire()">
-            🚀 Kipróbálom
-        </button>
+            <h1>
+                Ismerd meg<br>
+                <span class="gradient">jobban önmagad.</span>
+            </h1>
 
-        <button class="btn-secondary" onclick="scrollToSection('pricing')">
-            Megnézem a teljes verziót
-        </button>
+            <p>
+                Kövesd a hangulatod, figyeld meg a szokásaidat,
+                és fedezd fel, milyen tényezők kapcsolódhatnak
+                a mindennapi közérzetedhez.
+            </p>
+
+            <div class="hero-buttons">
+
+                <button class="btn btn-primary"
+                        onclick="showView('test')">
+                    🧠 Teszt indítása
+                </button>
+
+                <button class="btn btn-secondary"
+                        onclick="showView('checkin')">
+                    🌱 Napi check-in
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="feature-grid">
+
+        <div class="feature">
+            <div class="feature-icon">🧠</div>
+            <h3>Önismereti teszt</h3>
+            <p>
+                Nézd meg, mely területekre érdemes
+                jobban odafigyelned.
+            </p>
+        </div>
+
+        <div class="feature">
+            <div class="feature-icon">📈</div>
+            <h3>Kövesd a változást</h3>
+            <p>
+                Rögzítsd a napi állapotodat és figyeld
+                a saját mintáidat.
+            </p>
+        </div>
+
+        <div class="feature">
+            <div class="feature-icon">🌱</div>
+            <h3>Kis lépések</h3>
+            <p>
+                Egyszerű, hétköznapi ötletek a tudatosabb
+                rutin kialakításához.
+            </p>
+        </div>
 
     </div>
 
 </section>
 
 
-<!-- MAI HANGULAT -->
+<!-- =========================
+     TEST
+========================= -->
 
-<section class="section card">
+<section class="view" id="view-test">
 
-    <h2>🙂 Hogy érzed magad ma?</h2>
+    <div class="section-head">
 
-    <p class="muted">
-        Válassz egyet. Ez csak egy gyors napi önreflexió.
-    </p>
+        <h1>🧠 Önismereti teszt</h1>
 
-    <div class="mood-grid">
-
-        <button class="mood-button" onclick="selectMood(this,1)">
-            😞
-            <span>Nagyon rossz</span>
-        </button>
-
-        <button class="mood-button" onclick="selectMood(this,2)">
-            🙁
-            <span>Rossz</span>
-        </button>
-
-        <button class="mood-button" onclick="selectMood(this,3)">
-            😐
-            <span>Semleges</span>
-        </button>
-
-        <button class="mood-button" onclick="selectMood(this,4)">
-            🙂
-            <span>Jó</span>
-        </button>
-
-        <button class="mood-button" onclick="selectMood(this,5)">
-            😄
-            <span>Nagyon jó</span>
-        </button>
-
-    </div>
-
-    <p id="moodMessage" class="muted"></p>
-
-</section>
-
-
-<!-- PRÓBA / PRÉMIUM -->
-
-<section class="section card" id="pricing">
-
-    <h2>✨ Válaszd ki, hogyan szeretnéd használni</h2>
-
-    <p class="muted">
-        Próbáld ki ingyen, vagy használd a teljes önismereti rendszert.
-    </p>
-
-    <div class="pricing-grid">
-
-        <div class="price-card">
-
-            <h3>🆓 Próbaverzió</h3>
-
-            <div class="price">
-                0 Ft
-            </div>
-
-            <p class="muted">
-                Rövid betekintés a MindScope működésébe.
-            </p>
-
-            <ul class="feature-list">
-                <li>✓ Rövid kérdőív</li>
-                <li>✓ Alap eredmény</li>
-                <li>✓ Hangulatválasztó</li>
-                <li>✓ Azonnali visszajelzés</li>
-            </ul>
-
-            <button
-                class="btn-secondary"
-                onclick="startQuestionnaire()"
-            >
-                Próbaverzió indítása
-            </button>
-
-        </div>
-
-
-        <div class="price-card featured">
-
-            <div class="price-badge">
-                TELJES
-            </div>
-
-            <h3>⭐ MindScope Plus</h3>
-
-            <div class="price">
-                200 Ft <small>/ hónap</small>
-            </div>
-
-            <p class="muted">
-                A teljes önismereti élmény.
-            </p>
-
-            <ul class="feature-list">
-                <li>✓ Teljes kérdőív</li>
-                <li>✓ Részletes kategóriaeredmények</li>
-                <li>✓ Személyre szabott javaslatok</li>
-                <li>✓ Hangulatnapló</li>
-                <li>✓ Korábbi eredmények</li>
-                <li>✓ Fejlődés követése</li>
-            </ul>
-
-            <button
-                class="btn-primary"
-                onclick="showPremiumMessage()"
-            >
-                200 Ft / hónap
-            </button>
-
-        </div>
-
-    </div>
-
-    <div id="premiumMessage" class="alert alert-warning hidden">
-        <strong>Hamarosan elérhető.</strong>
         <p>
-            A fizetési rendszer még nincs bekötve.
-            A 200 Ft-os csomag felülete már készen áll,
-            a valódi előfizetést később lehet hozzákapcsolni.
+            Nincsenek jó vagy rossz válaszok.
+            Válaszolj úgy, ahogy az elmúlt 1–2 hétben
+            jellemző volt rád.
         </p>
-    </div>
-
-</section>
-
-
-<!-- KÉRDŐÍV -->
-
-<section class="section card" id="questionnaire">
-
-    <div class="progress-container">
-
-        <div class="progress-info">
-            <span>Kérdőív kitöltése</span>
-            <span id="progressText">0%</span>
-        </div>
-
-        <div class="progress">
-            <div
-                class="progress-bar"
-                id="progressBar"
-            ></div>
-        </div>
-
-    </div>
-
-    <h2>🧠 Önismereti kérdőív</h2>
-
-    <p class="muted">
-        Nincsenek jó vagy rossz válaszok.
-        Próbálj az elmúlt 1–2 hét tapasztalataira gondolni.
-    </p>
-
-    <div id="questionsContainer"></div>
-
-    <br>
-
-    <button
-        class="btn-primary"
-        onclick="calculateResults()"
-    >
-        📊 Eredmény megtekintése
-    </button>
-
-</section>
-
-
-<!-- EREDMÉNY -->
-
-<section
-    class="section card result"
-    id="resultSection"
->
-
-    <h2>📊 Az eredményed</h2>
-
-    <p class="muted">
-        Ezek a pontszámok a válaszaid mintázatait mutatják.
-        Nem diagnózisok, hanem önreflexiós támpontok.
-    </p>
-
-    <div
-        class="score-grid"
-        id="scoreGrid"
-    ></div>
-
-
-    <div class="section">
-
-        <h2>💡 Amit érdemes átgondolnod</h2>
-
-        <div id="explanations"></div>
 
     </div>
 
 
-    <div class="section">
+    <div class="card question-card">
 
-        <h2>🌱 Következő kis lépések</h2>
+        <div class="test-progress">
 
-        <div id="recommendations"></div>
-
-    </div>
-
-
-    <div class="alert alert-warning">
-
-        <strong>Fontos:</strong>
-
-        A MindScope nem diagnosztikai eszköz.
-        Az eredmény önismereti támpont, nem orvosi vagy
-        pszichológiai diagnózis.
-
-    </div>
-
-
-    <div id="safetyWarning"></div>
-
-    <br>
-
-    <button
-        class="btn-danger"
-        onclick="resetAll()"
-    >
-        🔄 Újrakezdés
-    </button>
-
-</section>
-
-
-<!-- NAPLÓ -->
-
-<section class="section card">
-
-    <h2>📅 Napi önreflexió</h2>
-
-    <p class="muted">
-        Írj le néhány mondatot arról, milyen volt a mai napod.
-        A bejegyzés csak ebben a böngészőben kerül mentésre.
-    </p>
-
-    <textarea
-        id="journal"
-        rows="5"
-        style="
-            width:100%;
-            padding:15px;
-            border:1px solid var(--border);
-            border-radius:15px;
-            resize:vertical;
-            font-family:inherit;
-        "
-        placeholder="Mi volt ma jó? Mi volt nehéz? Mire vagy büszke?"
-    ></textarea>
-
-    <br><br>
-
-    <button
-        class="btn-success"
-        onclick="saveJournal()"
-    >
-        💾 Bejegyzés mentése
-    </button>
-
-    <span
-        id="journalStatus"
-        class="muted"
-        style="margin-left:10px"
-    ></span>
-
-</section>
-
-
-<!-- STATISZTIKA -->
-
-<section class="section card">
-
-    <h2>📈 Saját statisztikád</h2>
-
-    <div class="daily-grid">
-
-        <div class="stat">
-
-            <div class="stat-number" id="moodCount">
-                0
+            <div class="progress-top">
+                <span id="testProgressText">1 / 20</span>
+                <span id="testPercent">0%</span>
             </div>
+
+            <div class="progress">
+                <div class="progress-bar"
+                     id="testProgressBar"></div>
+            </div>
+
+        </div>
+
+        <div id="questionArea"></div>
+
+        <div class="test-buttons">
+
+            <button class="btn btn-light"
+                    id="prevQuestion">
+                ← Vissza
+            </button>
+
+            <button class="btn btn-primary"
+                    id="nextQuestion">
+                Következő →
+            </button>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================
+     RESULTS
+========================= -->
+
+<section class="view" id="view-results">
+
+    <div class="section-head">
+
+        <h1>📊 Eredmények</h1>
+
+        <p>
+            Az eredmény az általad megadott válaszok
+            összesítése, nem diagnózis.
+        </p>
+
+    </div>
+
+    <div id="noResults" class="card">
+
+        <h2>Még nincs eredményed.</h2>
+
+        <p class="muted">
+            Töltsd ki az önismereti tesztet, hogy
+            megjelenjenek az eredményeid.
+        </p>
+
+        <button class="btn btn-primary"
+                onclick="showView('test')">
+            Teszt indítása
+        </button>
+
+    </div>
+
+
+    <div id="resultsContent" class="hidden">
+
+        <div class="card">
+
+            <h2>Területek áttekintése</h2>
+
+            <div class="score-grid" id="scoreGrid"></div>
+
+        </div>
+
+        <div class="card">
+
+            <h2>💡 Mit érdemes megfigyelned?</h2>
+
+            <div id="resultExplanation"></div>
+
+        </div>
+
+        <div class="card">
+
+            <h2>🌱 Következő kis lépések</h2>
+
+            <div id="resultRecommendations"></div>
+
+        </div>
+
+        <div class="card">
+
+            <strong>Fontos</strong>
+
+            <p class="muted">
+                A MindScope eredménye önismereti célú
+                visszajelzés. Nem alkalmas pszichológiai
+                vagy orvosi diagnózis felállítására.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================
+     CHECK IN
+========================= -->
+
+<section class="view" id="view-checkin">
+
+    <div class="section-head">
+
+        <h1>🌱 Napi állapot</h1>
+
+        <p>
+            Körülbelül 30 másodperc. Így később
+            láthatod a saját változásaidat.
+        </p>
+
+    </div>
+
+
+    <div class="card">
+
+        <div class="checkin-grid">
+
+            <div class="checkin-card">
+
+                <div class="checkin-title">
+                    😊 Hangulat
+                </div>
+
+                <div class="range-wrap">
+
+                    <input type="range"
+                           min="1"
+                           max="10"
+                           value="5"
+                           id="moodRange">
+
+                    <div class="range-number"
+                         id="moodValue">
+                        5
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="checkin-card">
+
+                <div class="checkin-title">
+                    ⚡ Energia
+                </div>
+
+                <div class="range-wrap">
+
+                    <input type="range"
+                           min="1"
+                           max="10"
+                           value="5"
+                           id="energyRange">
+
+                    <div class="range-number"
+                         id="energyValue">
+                        5
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="checkin-card">
+
+                <div class="checkin-title">
+                    😴 Alvás
+                </div>
+
+                <div class="range-wrap">
+
+                    <input type="range"
+                           min="1"
+                           max="10"
+                           value="5"
+                           id="sleepRange">
+
+                    <div class="range-number"
+                         id="sleepValue">
+                        5
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="checkin-card">
+
+                <div class="checkin-title">
+                    🧠 Stressz
+                </div>
+
+                <div class="range-wrap">
+
+                    <input type="range"
+                           min="1"
+                           max="10"
+                           value="5"
+                           id="stressRange">
+
+                    <div class="range-number"
+                         id="stressValue">
+                        5
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <br>
+
+        <button class="btn btn-primary"
+                onclick="saveCheckin()">
+            💾 Mai állapot mentése
+        </button>
+
+        <div id="checkinMessage"></div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================
+     PROGRESS
+========================= -->
+
+<section class="view" id="view-progress">
+
+    <div class="section-head">
+
+        <h1>📈 Haladás</h1>
+
+        <p>
+            A saját korábbi napi check-injeid alapján.
+        </p>
+
+    </div>
+
+    <div class="card">
+
+        <h2>Legutóbbi napok</h2>
+
+        <div id="historyList"
+             class="history-list">
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================
+     TIPS
+========================= -->
+
+<section class="view" id="view-tips">
+
+    <div class="section-head">
+
+        <h1>💡 Tippek</h1>
+
+        <p>
+            Nyiss meg egy témát további ötletekért.
+        </p>
+
+    </div>
+
+
+    <div class="tip-grid">
+
+        <div class="tip"
+             onclick="toggleTip(this)">
+
+            <div class="tip-icon">😴</div>
+
+            <h3>Alvás</h3>
+
+            <div class="tip-content">
+                Próbáld nagyjából hasonló időben elkezdeni
+                és befejezni az alvást. Lefekvés előtt
+                érdemes lehet csökkenteni a képernyőidőt
+                és a stimuláló tartalmakat.
+            </div>
+
+        </div>
+
+
+        <div class="tip"
+             onclick="toggleTip(this)">
+
+            <div class="tip-icon">🌿</div>
+
+            <h3>Stressz</h3>
+
+            <div class="tip-content">
+                Ha sok minden van egyszerre, válassz egyetlen
+                következő feladatot. A problémák kisebb
+                lépésekre bontása csökkentheti a túlterheltség
+                érzését.
+            </div>
+
+        </div>
+
+
+        <div class="tip"
+             onclick="toggleTip(this)">
+
+            <div class="tip-icon">📱</div>
+
+            <h3>Digitális egyensúly</h3>
+
+            <div class="tip-content">
+                Próbálj ki egy rövid, 30 perces időszakot
+                értesítések és rövid videók nélkül.
+                Figyeld meg, változik-e a koncentrációd.
+            </div>
+
+        </div>
+
+
+        <div class="tip"
+             onclick="toggleTip(this)">
+
+            <div class="tip-icon">🚶</div>
+
+            <h3>Mindennapi mozgás</h3>
+
+            <div class="tip-content">
+                Nem kell rögtön komoly edzésre gondolni.
+                Egy rövid séta vagy könnyű mozgás is lehet
+                egy egyszerű kezdőlépés.
+            </div>
+
+        </div>
+
+
+        <div class="tip"
+             onclick="toggleTip(this)">
+
+            <div class="tip-icon">💬</div>
+
+            <h3>Kapcsolatok</h3>
+
+            <div class="tip-content">
+                Ha valami nyomaszt, próbáld meg megosztani
+                egy olyan emberrel, akiben megbízol.
+                Nem feltétlenül kell azonnal megoldást találni.
+            </div>
+
+        </div>
+
+
+        <div class="tip"
+             onclick="toggleTip(this)">
+
+            <div class="tip-icon">🎯</div>
+
+            <h3>Motiváció</h3>
+
+            <div class="tip-content">
+                Válassz egy nagyon kicsi, konkrét feladatot.
+                A „megcsinálom az egészet” helyett próbáld:
+                „csak 5 percig elkezdem”.
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================
+     PREMIUM
+========================= -->
+
+<section class="view" id="view-premium">
+
+    <div class="premium">
+
+        <div class="badge">
+            ⭐ MindScope Premium
+        </div>
+
+        <h1>
+            Mélyebb önismeret.<br>
+            Több követés.
+        </h1>
+
+        <p>
+            A prémium verzió célja, hogy hosszabb távon
+            is követhető legyen, hogyan változik a közérzeted.
+        </p>
+
+        <div class="price">
+            200 Ft
+            <small>/ hónap</small>
+        </div>
+
+        <div class="premium-list">
+
+            <div>✓ Teljes önismereti teszt</div>
+            <div>✓ Hosszabb távú haladáskövetés</div>
+            <div>✓ Részletesebb eredményösszefoglaló</div>
+            <div>✓ Több napi check-in lehetőség</div>
+            <div>✓ Extra önismereti kérdések</div>
+
+        </div>
+
+        <button class="btn btn-success"
+                onclick="premiumDemo()">
+            ⭐ Prémium kipróbálása
+        </button>
+
+        <p style="font-size:12px;margin-top:15px">
+            A fizetési rendszer még nincs bekötve.
+            Ez jelenleg csak bemutató funkció.
+        </p>
+
+    </div>
+
+</section>
+
+
+<!-- =========================
+     SETTINGS
+========================= -->
+
+<section class="view" id="view-settings">
+
+    <div class="section-head">
+
+        <h1>⚙️ Beállítások</h1>
+
+        <p>
+            Az alkalmazás helyi beállításai.
+        </p>
+
+    </div>
+
+    <div class="card">
+
+        <div class="setting">
 
             <div>
-                Hangulatbejegyzések
+                <strong>Helyi adatok törlése</strong>
+
+                <div class="muted">
+                    Törli az eredményeket és a check-in adatokat
+                    erről az eszközről.
+                </div>
             </div>
 
-        </div>
-
-
-        <div class="stat">
-
-            <div class="stat-number" id="journalCount">
-                0
-            </div>
-
-            <div>
-                Mentett naplóbejegyzések
-            </div>
-
-        </div>
-
-
-        <div class="stat">
-
-            <div class="stat-number" id="testCount">
-                0
-            </div>
-
-            <div>
-                Kitöltött kérdőívek
-            </div>
+            <button class="btn btn-danger"
+                    onclick="clearData()">
+                Törlés
+            </button>
 
         </div>
 
@@ -861,368 +1537,439 @@ footer {
 
 </main>
 
+</div>
 
-<footer>
-    MindScope © 2026 · Önismereti célú alkalmazás
-</footer>
+</div>
 
 
 <script>
 
-/* =========================================================
+/* ==========================================
+   NAVIGÁCIÓ
+========================================== */
+
+const viewNames = {
+    home:"Kezdőlap",
+    test:"Önismereti teszt",
+    results:"Eredmények",
+    checkin:"Napi állapot",
+    progress:"Haladás",
+    tips:"Tippek",
+    premium:"Prémium",
+    settings:"Beállítások"
+};
+
+function showView(name){
+
+    document.querySelectorAll(".view")
+        .forEach(view => {
+            view.classList.remove("active");
+        });
+
+    const target =
+        document.getElementById("view-" + name);
+
+    if(target){
+        target.classList.add("active");
+    }
+
+    document.querySelectorAll(".menu-item")
+        .forEach(item => {
+            item.classList.toggle(
+                "active",
+                item.dataset.view === name
+            );
+        });
+
+    document.getElementById("pageTitle").innerText =
+        viewNames[name] || "MindScope";
+
+    closeMobileMenu();
+
+    if(name === "results"){
+        renderResults();
+    }
+
+    if(name === "progress"){
+        renderHistory();
+    }
+
+    window.scrollTo({
+        top:0,
+        behavior:"smooth"
+    });
+}
+
+
+document.querySelectorAll(".menu-item")
+    .forEach(item => {
+
+        item.addEventListener("click", () => {
+
+            showView(item.dataset.view);
+
+        });
+
+    });
+
+
+/* ==========================================
+   MOBIL MENÜ
+========================================== */
+
+const sidebar =
+    document.getElementById("sidebar");
+
+const overlay =
+    document.getElementById("overlay");
+
+document.getElementById("mobileMenu")
+    .addEventListener("click", () => {
+
+        sidebar.classList.toggle("open");
+        overlay.classList.toggle("show");
+
+    });
+
+overlay.addEventListener("click", closeMobileMenu);
+
+function closeMobileMenu(){
+
+    sidebar.classList.remove("open");
+    overlay.classList.remove("show");
+
+}
+
+
+/* ==========================================
    KÉRDÉSEK
-========================================================= */
+========================================== */
 
 const questions = [
 
-    {
-        category:"Hangulat",
-        text:"Mennyire érzed magad lehangoltnak az utóbbi időben?",
-        factor:"hangulat"
-    },
+{
+    category:"Hangulat",
+    text:"Mennyire érzed magad lehangoltnak az utóbbi időben?",
+    factor:"hangulat"
+},
 
-    {
-        category:"Hangulat",
-        text:"Mennyire érdekelnek azok a dolgok, amelyek korábban örömet okoztak?",
-        factor:"hangulat"
-    },
+{
+    category:"Hangulat",
+    text:"Mennyire érdekelnek mostanában azok a dolgok, amelyek korábban örömet okoztak?",
+    factor:"hangulat"
+},
 
-    {
-        category:"Energia",
-        text:"Mennyire érzed magad energikusnak a hétköznapokban?",
-        factor:"energia"
-    },
+{
+    category:"Energia",
+    text:"Mennyire érzed magad energikusnak a hétköznapokban?",
+    factor:"energia"
+},
 
-    {
-        category:"Energia",
-        text:"Milyen gyakran érzed magad kimerültnek?",
-        factor:"energia"
-    },
+{
+    category:"Energia",
+    text:"Milyen gyakran érzed magad kimerültnek napközben?",
+    factor:"energia"
+},
 
-    {
-        category:"Stressz",
-        text:"Mennyire érzed magad stresszesnek egy átlagos napon?",
-        factor:"stressz"
-    },
+{
+    category:"Stressz",
+    text:"Mennyire érzed magad stresszesnek egy átlagos napon?",
+    factor:"stressz"
+},
 
-    {
-        category:"Stressz",
-        text:"Milyen gyakran érzed úgy, hogy túl sok feladat nehezedik rád?",
-        factor:"stressz"
-    },
+{
+    category:"Stressz",
+    text:"Milyen gyakran érzed úgy, hogy túl sok feladat nehezedik rád?",
+    factor:"stressz"
+},
 
-    {
-        category:"Stressz",
-        text:"Mennyire nehéz kikapcsolnod a problémáidról való gondolkodást?",
-        factor:"stressz"
-    },
+{
+    category:"Szorongás",
+    text:"Milyen gyakran aggódsz olyan dolgok miatt, amelyeket nem tudsz kontrollálni?",
+    factor:"szorongas"
+},
 
-    {
-        category:"Aggodalom",
-        text:"Milyen gyakran aggódsz olyan dolgok miatt, amelyeket nem tudsz kontrollálni?",
-        factor:"szorongas"
-    },
+{
+    category:"Szorongás",
+    text:"Mennyire nehéz bizonytalan helyzetekben nyugodtnak maradnod?",
+    factor:"szorongas"
+},
 
-    {
-        category:"Aggodalom",
-        text:"Mennyire nehéz bizonytalan helyzetekben nyugodtnak maradnod?",
-        factor:"szorongas"
-    },
+{
+    category:"Alvás",
+    text:"Milyen gyakran ébredsz úgy, hogy nem érzed magad kipihentnek?",
+    factor:"alvas"
+},
 
-    {
-        category:"Alvás",
-        text:"Milyen gyakran ébredsz úgy, hogy nem érzed magad kipihentnek?",
-        factor:"alvas"
-    },
+{
+    category:"Alvás",
+    text:"Mennyire nehéz elaludnod?",
+    factor:"alvas"
+},
 
-    {
-        category:"Alvás",
-        text:"Mennyire nehéz számodra elaludni?",
-        factor:"alvas"
-    },
+{
+    category:"Kapcsolatok",
+    text:"Mennyire érzed magad támogatva a környezeted által?",
+    factor:"kapcsolatok"
+},
 
-    {
-        category:"Kapcsolatok",
-        text:"Mennyire érzed magad támogatva a környezeted által?",
-        factor:"kapcsolatok"
-    },
+{
+    category:"Kapcsolatok",
+    text:"Milyen gyakran érzed magad magányosnak?",
+    factor:"kapcsolatok"
+},
 
-    {
-        category:"Kapcsolatok",
-        text:"Milyen gyakran érzed magad magányosnak?",
-        factor:"kapcsolatok"
-    },
+{
+    category:"Motiváció",
+    text:"Mennyire érzed magad motiváltnak a mindennapi feladataid elvégzésére?",
+    factor:"motivacio"
+},
 
-    {
-        category:"Motiváció",
-        text:"Mennyire érzed magad motiváltnak a mindennapi feladataidhoz?",
-        factor:"motivacio"
-    },
+{
+    category:"Motiváció",
+    text:"Milyen gyakran halogatsz fontos feladatokat?",
+    factor:"motivacio"
+},
 
-    {
-        category:"Motiváció",
-        text:"Milyen gyakran halogatsz fontos feladatokat?",
-        factor:"motivacio"
-    },
+{
+    category:"Életmód",
+    text:"Milyen gyakran mozogsz legalább 20–30 percet?",
+    factor:"eletmod"
+},
 
-    {
-        category:"Munka / iskola",
-        text:"Mennyire terhel meg a munkád vagy az iskolád?",
-        factor:"munka"
-    },
+{
+    category:"Életmód",
+    text:"Mennyire érzed kiegyensúlyozottnak a napi rutinodat?",
+    factor:"eletmod"
+},
 
-    {
-        category:"Munka / iskola",
-        text:"Milyen gyakran érzed úgy, hogy nehéz megfelelned az elvárásoknak?",
-        factor:"munka"
-    },
+{
+    category:"Digitális terhelés",
+    text:"Mennyire érzed úgy, hogy a telefonod elvonja a figyelmed?",
+    factor:"digitalis"
+},
 
-    {
-        category:"Életmód",
-        text:"Milyen gyakran mozogsz legalább 20–30 percet?",
-        factor:"eletmod"
-    },
+{
+    category:"Önértékelés",
+    text:"Mennyire vagy elégedett önmagaddal mostanában?",
+    factor:"onertekeles"
+},
 
-    {
-        category:"Életmód",
-        text:"Mennyire érzed kiegyensúlyozottnak a napi rutinodat?",
-        factor:"eletmod"
-    },
+{
+    category:"Önértékelés",
+    text:"Milyen gyakran hasonlítod magad másokhoz?",
+    factor:"onertekeles"
+},
 
-    {
-        category:"Digitális szokások",
-        text:"Mennyire érzed úgy, hogy a telefon vagy közösségi média elvonja a figyelmed?",
-        factor:"digitalis"
-    },
-
-    {
-        category:"Önértékelés",
-        text:"Mennyire vagy elégedett önmagaddal mostanában?",
-        factor:"onertekeles"
-    },
-
-    {
-        category:"Önértékelés",
-        text:"Milyen gyakran hasonlítod magad másokhoz?",
-        factor:"onertekeles"
-    },
-
-    {
-        category:"Önértékelés",
-        text:"Mennyire vagy szigorú magaddal, amikor hibázol?",
-        factor:"onertekeles"
-    },
-
-    {
-        category:"Kontrollérzet",
-        text:"Mennyire érzed kontrollálhatónak a jelenlegi életedet?",
-        factor:"kontroll"
-    },
-
-    {
-        category:"Kontrollérzet",
-        text:"Mennyire aggódsz a jövő miatt?",
-        factor:"kontroll"
-    },
-
-    {
-        category:"Öröm",
-        text:"Milyen gyakran csinálsz valamit csak azért, mert élvezed?",
-        factor:"orom"
-    },
-
-    {
-        category:"Öröm",
-        text:"Mennyire érzed úgy, hogy van időd saját magadra?",
-        factor:"orom"
-    },
-
-    {
-        category:"Biztonság",
-        text:"Az elmúlt hetekben előfordult, hogy azt kívántad, bárcsak ne kellene létezned, vagy ne kellene tovább élned?",
-        factor:"safety"
-    }
+{
+    category:"Feltöltődés",
+    text:"Mennyire érzed úgy, hogy van időd saját magadra?",
+    factor:"orom"
+}
 
 ];
 
 
-/* =========================================================
-   VÁLASZOK
+/*
+    Mindegyik kérdésnél ugyanaz a skála:
 
-   MINDENHOL:
+    0 = kedvezőbb / kisebb terhelés
+    4 = kedvezőtlenebb / nagyobb terhelés
 
-   0 = kedvezőbb / kevésbé terhelő
-   4 = erősebb / nagyobb terhelés
+    Így nincs össze-vissza fordított sorrend.
+*/
 
-   Így minden kérdés ugyanabba az irányba működik.
-========================================================= */
+const answers = [
 
-const options = [
     ["Egyáltalán nem",0],
     ["Kissé",1],
     ["Közepesen",2],
     ["Eléggé",3],
     ["Nagyon",4]
+
 ];
 
+let currentQuestion = 0;
 
-/* =========================================================
-   KÉRDÉSEK KIRAJZOLÁSA
-========================================================= */
-
-const container =
-    document.getElementById("questionsContainer");
-
-let currentCategory = "";
-
-questions.forEach((q,index)=>{
-
-    if(q.category !== currentCategory){
-
-        currentCategory = q.category;
-
-        const title =
-            document.createElement("h3");
-
-        title.className = "category-title";
-
-        title.textContent = q.category;
-
-        container.appendChild(title);
-    }
+let userAnswers =
+    JSON.parse(
+        localStorage.getItem("mindscopeAnswers") || "[]"
+    );
 
 
-    const question =
-        document.createElement("div");
+/* ==========================================
+   KÉRDÉS MEGJELENÍTÉSE
+========================================== */
 
-    question.className = "question";
+function renderQuestion(){
 
+    const q = questions[currentQuestion];
 
-    let html = "";
+    const area =
+        document.getElementById("questionArea");
 
-    options.forEach((option,optionIndex)=>{
+    const saved =
+        userAnswers[currentQuestion];
+
+    let html = `
+
+        <div class="question-category">
+            ${q.category}
+        </div>
+
+        <div class="question-number">
+            ${currentQuestion + 1}. kérdés
+        </div>
+
+        <div class="question-text">
+            ${q.text}
+        </div>
+
+        <div class="answer-list">
+    `;
+
+    answers.forEach((answer,index) => {
+
+        const selected =
+            saved === answer[1];
 
         html += `
-            <label class="option">
 
-                <input
-                    type="radio"
-                    name="q${index}"
-                    value="${option[1]}"
-                    onchange="updateProgress()"
-                >
+            <button
+                class="answer ${selected ? "selected" : ""}"
+                onclick="selectAnswer(${answer[1]})">
 
-                ${option[0]}
+                ${answer[0]}
 
-            </label>
+            </button>
+
         `;
 
     });
 
+    html += `</div>`;
 
-    question.innerHTML = `
+    area.innerHTML = html;
 
-        <div class="question-title">
+    updateTestProgress();
 
-            <span class="question-number">
-                ${index+1}.
-            </span>
+    document.getElementById("prevQuestion")
+        .disabled = currentQuestion === 0;
 
-            ${q.text}
-
-        </div>
-
-        <div class="options">
-            ${html}
-        </div>
-
-    `;
-
-    container.appendChild(question);
-
-});
+    document.getElementById("nextQuestion")
+        .innerText =
+        currentQuestion === questions.length - 1
+            ? "Eredmény →"
+            : "Következő →";
+}
 
 
-/* =========================================================
-   PROGRESS
-========================================================= */
+/* ==========================================
+   VÁLASZ
+========================================== */
 
-function updateProgress(){
+function selectAnswer(value){
 
-    let answered = 0;
+    userAnswers[currentQuestion] = value;
 
-    questions.forEach((q,index)=>{
+    localStorage.setItem(
+        "mindscopeAnswers",
+        JSON.stringify(userAnswers)
+    );
 
-        if(
-            document.querySelector(
-                `input[name="q${index}"]:checked`
-            )
-        ){
-            answered++;
+    renderQuestion();
+
+}
+
+
+/* ==========================================
+   KÖVETKEZŐ / VISSZA
+========================================== */
+
+document.getElementById("nextQuestion")
+    .addEventListener("click", () => {
+
+        if(userAnswers[currentQuestion] === undefined){
+
+            alert("Kérlek válassz egy választ!");
+
+            return;
+        }
+
+        if(currentQuestion === questions.length - 1){
+
+            calculateResults();
+
+            showView("results");
+
+            return;
+        }
+
+        currentQuestion++;
+
+        renderQuestion();
+
+    });
+
+
+document.getElementById("prevQuestion")
+    .addEventListener("click", () => {
+
+        if(currentQuestion > 0){
+
+            currentQuestion--;
+
+            renderQuestion();
+
         }
 
     });
 
 
-    const percentage =
+/* ==========================================
+   PROGRESS
+========================================== */
+
+function updateTestProgress(){
+
+    const answered =
+        userAnswers.filter(
+            value => value !== undefined
+        ).length;
+
+    const percent =
         Math.round(
-            (answered/questions.length)*100
+            (answered / questions.length) * 100
         );
 
+    document.getElementById("testProgressText")
+        .innerText =
+        `${currentQuestion + 1} / ${questions.length}`;
 
-    document.getElementById("progressBar")
-        .style.width = percentage+"%";
+    document.getElementById("testPercent")
+        .innerText =
+        percent + "%";
 
-    document.getElementById("progressText")
-        .textContent = percentage+"%";
+    document.getElementById("testProgressBar")
+        .style.width =
+        percent + "%";
 }
 
 
-/* =========================================================
-   KÉRDŐÍV INDÍTÁSA
-========================================================= */
-
-function startQuestionnaire(){
-
-    document
-        .getElementById("questionnaire")
-        .scrollIntoView({
-            behavior:"smooth"
-        });
-
-}
-
-
-/* =========================================================
+/* ==========================================
    EREDMÉNY
-========================================================= */
+========================================== */
 
 function calculateResults(){
 
     const scores = {};
 
-    let unanswered = 0;
-
-
-    questions.forEach((q,index)=>{
-
-        const selected =
-            document.querySelector(
-                `input[name="q${index}"]:checked`
-            );
-
-
-        if(!selected){
-
-            unanswered++;
-
-            return;
-        }
-
+    questions.forEach((q,index) => {
 
         const value =
-            Number(selected.value);
+            userAnswers[index];
 
+        if(value === undefined) return;
 
         if(!scores[q.factor]){
 
@@ -1233,116 +1980,96 @@ function calculateResults(){
 
         }
 
-
         scores[q.factor].total += value;
         scores[q.factor].count++;
 
     });
 
-
-    if(unanswered > 0){
-
-        alert(
-            `Még ${unanswered} kérdésre nem válaszoltál.`
-        );
-
-        return;
-    }
-
-
     const normalized = {};
 
-
-    Object.keys(scores).forEach(key=>{
+    Object.keys(scores).forEach(key => {
 
         const average =
             scores[key].total /
             scores[key].count;
 
-
         normalized[key] =
-            Math.round(
-                (average/4)*100
-            );
+            Math.round((average / 4) * 100);
 
     });
 
-
-    renderScores(normalized);
-
-    generateExplanations(normalized);
-
-    generateRecommendations(normalized);
-
-    checkSafety(scores);
-
-
-    document.getElementById("resultSection")
-        .style.display = "block";
-
-
     localStorage.setItem(
-        "mindscope_test_count",
-        Number(
-            localStorage.getItem(
-                "mindscope_test_count"
-            ) || 0
-        )+1
+        "mindscopeResults",
+        JSON.stringify(normalized)
     );
 
-
-    updateStats();
-
-
-    document
-        .getElementById("resultSection")
-        .scrollIntoView({
-            behavior:"smooth"
-        });
+    localStorage.setItem(
+        "mindscopeResultDate",
+        new Date().toLocaleDateString("hu-HU")
+    );
 
 }
 
 
-/* =========================================================
-   PONTSZÁMOK
-========================================================= */
+/* ==========================================
+   EREDMÉNY MEGJELENÍTÉS
+========================================== */
 
-function renderScores(scores){
+function renderResults(){
+
+    const saved =
+        localStorage.getItem("mindscopeResults");
+
+    const noResults =
+        document.getElementById("noResults");
+
+    const content =
+        document.getElementById("resultsContent");
+
+    if(!saved){
+
+        noResults.classList.remove("hidden");
+        content.classList.add("hidden");
+
+        return;
+    }
+
+    noResults.classList.add("hidden");
+    content.classList.remove("hidden");
+
+    const scores =
+        JSON.parse(saved);
+
+    const names = {
+
+        hangulat:"Általános hangulat",
+        energia:"Energia / kimerültség",
+        stressz:"Stressz",
+        szorongas:"Aggodalom",
+        alvas:"Alvás",
+        kapcsolatok:"Társas kapcsolatok",
+        motivacio:"Motiváció",
+        eletmod:"Életmód",
+        digitalis:"Digitális terhelés",
+        onertekeles:"Önértékelés",
+        orom:"Feltöltődés"
+
+    };
 
     const grid =
         document.getElementById("scoreGrid");
 
     grid.innerHTML = "";
 
-
-    const names = {
-
-        hangulat:"Hangulat",
-        energia:"Energia / fáradtság",
-        stressz:"Stressz",
-        szorongas:"Aggodalom",
-        alvas:"Alvás",
-        kapcsolatok:"Kapcsolatok",
-        motivacio:"Motiváció",
-        munka:"Munka / iskola",
-        eletmod:"Életmód",
-        digitalis:"Digitális terhelés",
-        onertekeles:"Önértékelés",
-        kontroll:"Kontrollérzet",
-        orom:"Feltöltődés"
-
-    };
-
-
-    Object.keys(scores).forEach(key=>{
+    Object.keys(scores).forEach(key => {
 
         grid.innerHTML += `
 
             <div class="score-card">
 
-                <strong>
+                <div class="score-name">
                     ${names[key] || key}
-                </strong>
+                </div>
 
                 <div class="score-number">
                     ${scores[key]}%
@@ -1352,8 +2079,8 @@ function renderScores(scores){
 
                     <div
                         class="score-fill"
-                        style="width:${scores[key]}%"
-                    ></div>
+                        style="width:${scores[key]}%">
+                    </div>
 
                 </div>
 
@@ -1363,306 +2090,69 @@ function renderScores(scores){
 
     });
 
-}
 
-
-/* =========================================================
-   MAGYARÁZATOK
-========================================================= */
-
-function generateExplanations(scores){
-
-    const box =
-        document.getElementById("explanations");
-
-    box.innerHTML = "";
-
-    const items = [];
-
-
-    if(scores.stressz >= 60){
-
-        items.push(`
-            <div class="recommendation">
-                <strong>🌪️ Stresszterhelés</strong>
-                <p>
-                    A válaszaid alapján a napi terhelés
-                    jelenleg fontos témának tűnik.
-                    Érdemes lehet megfigyelned, mely helyzetek
-                    növelik leginkább a feszültséget.
-                </p>
-            </div>
-        `);
-
-    }
-
-
-    if(scores.szorongas >= 60){
-
-        items.push(`
-            <div class="recommendation">
-                <strong>💭 Aggodalom</strong>
-                <p>
-                    A bizonytalansággal és kontrollal kapcsolatos
-                    gondolatok nagyobb figyelmet kaphatnak
-                    a mindennapjaidban.
-                </p>
-            </div>
-        `);
-
-    }
-
-
-    if(scores.alvas >= 60){
-
-        items.push(`
-            <div class="recommendation">
-                <strong>😴 Pihenés</strong>
-                <p>
-                    A pihenés és az alvás minősége olyan tényező,
-                    amelyet érdemes lehet tudatosabban követned.
-                </p>
-            </div>
-        `);
-
-    }
-
-
-    if(scores.kapcsolatok >= 60){
-
-        items.push(`
-            <div class="recommendation">
-                <strong>👥 Társas kapcsolatok</strong>
-                <p>
-                    A támogatottság és a társas kapcsolatok
-                    fontos szerepet játszhatnak a mindennapi
-                    közérzetedben.
-                </p>
-            </div>
-        `);
-
-    }
-
-
-    if(scores.motivacio >= 60){
-
-        items.push(`
-            <div class="recommendation">
-                <strong>🎯 Motiváció</strong>
-                <p>
-                    A feladatok elkezdése és a célokkal kapcsolatos
-                    bizonytalanság most több figyelmet igényelhet.
-                </p>
-            </div>
-        `);
-
-    }
-
-
-    if(scores.digitalis >= 60){
-
-        items.push(`
-            <div class="recommendation">
-                <strong>📱 Digitális terhelés</strong>
-                <p>
-                    A digitális eszközök használatát érdemes lehet
-                    összevetned az alvásoddal, figyelmeddel és
-                    napi energiaszinteddel.
-                </p>
-            </div>
-        `);
-
-    }
-
-
-    if(scores.onertekeles >= 60){
-
-        items.push(`
-            <div class="recommendation">
-                <strong>🪞 Önmagaddal való kapcsolat</strong>
-                <p>
-                    Érdemes lehet megfigyelned, milyen szigorúan
-                    ítéled meg saját hibáidat és teljesítményedet.
-                </p>
-            </div>
-        `);
-
-    }
-
-
-    if(items.length === 0){
-
-        items.push(`
-            <div class="recommendation">
-
-                <strong>🌱 Nincs egyértelműen kiemelkedő terület</strong>
-
-                <p>
-                    A válaszaid alapján egyik vizsgált terület
-                    sem emelkedik ki erősen.
-                    Ez nem jelenti azt, hogy nincs mit
-                    átgondolnod – inkább egy kiegyensúlyozottabb
-                    mintázatra utalhat.
-                </p>
-
-            </div>
-        `);
-
-    }
-
-
-    box.innerHTML =
-        items.join("");
+    generateResultText(scores);
 
 }
 
 
-/* =========================================================
-   JAVASLATOK
-========================================================= */
+/* ==========================================
+   EREDMÉNY SZÖVEG
+========================================== */
 
-function generateRecommendations(scores){
+function generateResultText(scores){
 
-    const box =
-        document.getElementById("recommendations");
+    const explanation =
+        document.getElementById("resultExplanation");
 
-    const items = [];
+    const recommendations =
+        document.getElementById("resultRecommendations");
+
+    const areas = [];
+
+    Object.keys(scores).forEach(key => {
+
+        if(scores[key] >= 60){
+
+            areas.push(key);
+
+        }
+
+    });
 
 
-    if(scores.alvas >= 50){
+    if(areas.length === 0){
 
-        items.push(`
-            <div class="recommendation">
-                💤 Próbálj hasonló időben lefeküdni és felkelni.
+        explanation.innerHTML = `
+
+            <div class="result-message">
+
+                A válaszaid alapján most egyik vizsgált
+                terület sem emelkedik ki különösen.
+
+                <br><br>
+
+                Ez nem jelenti azt, hogy minden rendben
+                vagy hogy semmin sem érdemes változtatni.
+                A napi állapotod idővel változhat.
+
             </div>
-        `);
 
-    }
+        `;
 
+    }else{
 
-    if(scores.stressz >= 50){
+        explanation.innerHTML = `
 
-        items.push(`
-            <div class="recommendation">
-                🌿 Tegyél be naponta legalább 10 percet,
-                amikor nincs teljesítményelvárásod.
-            </div>
-        `);
+            <div class="result-message">
 
-    }
+                Néhány terület a válaszaid alapján
+                jelenleg nagyobb figyelmet érdemelhet.
 
+                <br><br>
 
-    if(scores.szorongas >= 50){
-
-        items.push(`
-            <div class="recommendation">
-                📝 Írd le, mely dolgokat tudod befolyásolni,
-                és melyeket nem.
-            </div>
-        `);
-
-    }
-
-
-    if(scores.kapcsolatok >= 50){
-
-        items.push(`
-            <div class="recommendation">
-                💬 Keress egy embert, akivel őszintén tudsz beszélni.
-            </div>
-        `);
-
-    }
-
-
-    if(scores.digitalis >= 50){
-
-        items.push(`
-            <div class="recommendation">
-                📵 Próbálj ki napi 30 perc képernyőmentes időt.
-            </div>
-        `);
-
-    }
-
-
-    if(scores.eletmod >= 50){
-
-        items.push(`
-            <div class="recommendation">
-                🚶 Egy rövid séta is jó kezdés lehet.
-            </div>
-        `);
-
-    }
-
-
-    if(scores.motivacio >= 50){
-
-        items.push(`
-            <div class="recommendation">
-                🎯 Válassz egyetlen apró feladatot,
-                amit ma biztosan meg tudsz csinálni.
-            </div>
-        `);
-
-    }
-
-
-    if(items.length === 0){
-
-        items.push(`
-            <div class="recommendation">
-                🌱 Figyeld továbbra is, mely szokások segítenek
-                fenntartani a jó közérzetedet.
-            </div>
-        `);
-
-    }
-
-
-    box.innerHTML =
-        items.join("");
-
-}
-
-
-/* =========================================================
-   BIZTONSÁGI KÉRDÉS
-========================================================= */
-
-function checkSafety(scores){
-
-    const box =
-        document.getElementById("safetyWarning");
-
-    box.innerHTML = "";
-
-
-    if(
-        scores.safety &&
-        scores.safety.total >= 2
-    ){
-
-        box.innerHTML = `
-
-            <div class="alert alert-danger">
-
-                <strong>Fontos biztonsági jelzés</strong>
-
-                <p>
-                    A válaszod alapján érdemes lehet
-                    személyesen beszélned egy megbízható
-                    személlyel vagy mentális egészségügyi
-                    szakemberrel.
-                </p>
-
-                <p>
-                    Ha közvetlen veszélyben vagy, vagy attól tartasz,
-                    hogy kárt tennél magadban, kérj azonnal sürgős
-                    segítséget a helyi segélyszolgálattól vagy
-                    keresd fel a legközelebbi sürgősségi ellátást.
-                </p>
+                Érdemes ezeket nem önmagukban, hanem
+                a saját élethelyzeteddel együtt értelmezni.
 
             </div>
 
@@ -1670,237 +2160,298 @@ function checkSafety(scores){
 
     }
 
+
+    const recs = [];
+
+    if(scores.alvas >= 50){
+
+        recs.push("💤 Figyelj a rendszeresebb alvási rutinra.");
+
+    }
+
+    if(scores.stressz >= 50){
+
+        recs.push("🌿 Próbálj minden nap rövid, teljesítménymentes időt hagyni magadnak.");
+
+    }
+
+    if(scores.digitalis >= 50){
+
+        recs.push("📱 Próbálj ki egy rövid telefonmentes időszakot.");
+
+    }
+
+    if(scores.motivacio >= 50){
+
+        recs.push("🎯 Válassz egyetlen kis, konkrét feladatot.");
+
+    }
+
+    if(scores.kapcsolatok >= 50){
+
+        recs.push("💬 Beszélj valakivel, akiben megbízol.");
+
+    }
+
+    if(scores.eletmod >= 50){
+
+        recs.push("🚶 Egy rövid séta vagy könnyű mozgás is jó kezdés lehet.");
+
+    }
+
+    if(recs.length === 0){
+
+        recs.push(
+            "🌱 Tartsd meg azokat a szokásokat, amelyek jelenleg segítenek."
+        );
+
+    }
+
+    recommendations.innerHTML =
+        recs.map(
+            item => `
+                <div class="result-message">
+                    ${item}
+                </div>
+            `
+        ).join("");
+
 }
 
 
-/* =========================================================
-   HANGULAT
-========================================================= */
+/* ==========================================
+   CHECK-IN
+========================================== */
 
-function selectMood(button,value){
+const rangePairs = [
 
-    document
-        .querySelectorAll(".mood-button")
-        .forEach(btn=>{
-            btn.classList.remove("selected");
-        });
+    ["moodRange","moodValue"],
+    ["energyRange","energyValue"],
+    ["sleepRange","sleepValue"],
+    ["stressRange","stressValue"]
+
+];
+
+rangePairs.forEach(pair => {
+
+    const range =
+        document.getElementById(pair[0]);
+
+    const value =
+        document.getElementById(pair[1]);
+
+    range.addEventListener("input", () => {
+
+        value.innerText =
+            range.value;
+
+    });
+
+});
 
 
-    button.classList.add("selected");
+function saveCheckin(){
 
+    const today =
+        new Date().toLocaleDateString("hu-HU");
 
-    const messages = {
+    const data = {
 
-        1:"Úgy tűnik, ma nehezebb napod van. Próbálj meg egy kis időt magadra szánni.",
-        2:"Nem tűnik könnyűnek a mai nap. Egy kis pihenés vagy beszélgetés segíthet.",
-        3:"Egy átlagos napnak tűnik. Figyeld meg, mi javíthatna egy kicsit a közérzeteden.",
-        4:"Örülünk, hogy ma inkább jól érzed magad. Érdemes megfigyelni, mi segített ebben.",
-        5:"Szuper! Érdemes elraktározni, mi tette ilyen jóvá a mai napot."
+        date:today,
+
+        mood:Number(
+            document.getElementById("moodRange").value
+        ),
+
+        energy:Number(
+            document.getElementById("energyRange").value
+        ),
+
+        sleep:Number(
+            document.getElementById("sleepRange").value
+        ),
+
+        stress:Number(
+            document.getElementById("stressRange").value
+        )
 
     };
 
 
-    document.getElementById("moodMessage")
-        .textContent = messages[value];
-
-
-    const moods =
-        Number(
-            localStorage.getItem("mindscope_mood_count") || 0
+    let history =
+        JSON.parse(
+            localStorage.getItem("mindscopeHistory") || "[]"
         );
 
 
+    history = history.filter(
+        item => item.date !== today
+    );
+
+    history.unshift(data);
+
+    history =
+        history.slice(0,30);
+
+
     localStorage.setItem(
-        "mindscope_mood_count",
-        moods+1
+        "mindscopeHistory",
+        JSON.stringify(history)
     );
 
 
-    updateStats();
+    document.getElementById("checkinMessage")
+        .innerHTML = `
+
+            <div class="result-message">
+
+                ✓ A mai állapotod elmentve.
+
+            </div>
+
+        `;
 
 }
 
 
-/* =========================================================
-   NAPLÓ
-========================================================= */
+/* ==========================================
+   HISTORY
+========================================== */
 
-function saveJournal(){
+function renderHistory(){
 
-    const textarea =
-        document.getElementById("journal");
+    const container =
+        document.getElementById("historyList");
 
-    const text =
-        textarea.value.trim();
+    const history =
+        JSON.parse(
+            localStorage.getItem("mindscopeHistory") || "[]"
+        );
 
 
-    if(!text){
+    if(history.length === 0){
 
-        alert("Írj be valamit a naplóba.");
+        container.innerHTML = `
+
+            <div class="result-message">
+
+                Még nincs rögzített napod.
+                Töltsd ki a napi check-int!
+
+            </div>
+
+        `;
 
         return;
     }
 
 
-    const entries =
-        JSON.parse(
-            localStorage.getItem(
-                "mindscope_journal"
-            ) || "[]"
-        );
+    container.innerHTML = history.map(item => {
+
+        const average =
+            Math.round(
+                (
+                    item.mood +
+                    item.energy +
+                    item.sleep +
+                    (11 - item.stress)
+                ) / 4
+            );
+
+        return `
+
+            <div class="history-item">
+
+                <div>
+
+                    <strong>
+                        ${item.date}
+                    </strong>
+
+                    <div class="muted">
+                        😊 ${item.mood}
+                        · ⚡ ${item.energy}
+                        · 😴 ${item.sleep}
+                        · 🧠 ${item.stress}
+                    </div>
+
+                </div>
+
+                <div class="history-score">
+                    ${average}/10
+                </div>
+
+            </div>
+
+        `;
+
+    }).join("");
+
+}
 
 
-    entries.push({
+/* ==========================================
+   TIPS
+========================================== */
 
-        date:new Date().toLocaleString("hu-HU"),
+function toggleTip(element){
 
-        text:text
+    element.classList.toggle("open");
 
-    });
+}
 
 
-    localStorage.setItem(
-        "mindscope_journal",
-        JSON.stringify(entries)
+/* ==========================================
+   PREMIUM
+========================================== */
+
+function premiumDemo(){
+
+    alert(
+        "A prémium funkció jelenleg bemutató módban van. A fizetés később köthető be."
     );
 
-
-    textarea.value = "";
-
-
-    document.getElementById("journalStatus")
-        .textContent = "✓ Elmentve";
-
-
-    setTimeout(()=>{
-
-        document.getElementById("journalStatus")
-            .textContent = "";
-
-    },3000);
-
-
-    updateStats();
-
 }
 
 
-/* =========================================================
-   STATISZTIKA
-========================================================= */
+/* ==========================================
+   ADATOK TÖRLÉSE
+========================================== */
 
-function updateStats(){
+function clearData(){
 
-    document.getElementById("moodCount")
-        .textContent =
-        localStorage.getItem(
-            "mindscope_mood_count"
-        ) || 0;
-
-
-    const journals =
-        JSON.parse(
-            localStorage.getItem(
-                "mindscope_journal"
-            ) || "[]"
+    const confirmed =
+        confirm(
+            "Biztosan törlöd az összes MindScope adatot erről az eszközről?"
         );
 
+    if(!confirmed) return;
 
-    document.getElementById("journalCount")
-        .textContent = journals.length;
+    localStorage.removeItem("mindscopeAnswers");
+    localStorage.removeItem("mindscopeResults");
+    localStorage.removeItem("mindscopeResultDate");
+    localStorage.removeItem("mindscopeHistory");
 
+    userAnswers = [];
 
-    document.getElementById("testCount")
-        .textContent =
-        localStorage.getItem(
-            "mindscope_test_count"
-        ) || 0;
+    currentQuestion = 0;
 
-}
+    renderQuestion();
 
+    alert("Az adatok törölve.");
 
-updateStats();
-
-
-/* =========================================================
-   PRÉMIUM
-========================================================= */
-
-function showPremiumMessage(){
-
-    const message =
-        document.getElementById("premiumMessage");
-
-    message.classList.remove("hidden");
-
-    message.scrollIntoView({
-        behavior:"smooth",
-        block:"center"
-    });
+    showView("home");
 
 }
 
 
-/* =========================================================
-   NAVIGÁCIÓ
-========================================================= */
+/* ==========================================
+   INDÍTÁS
+========================================== */
 
-function scrollToSection(id){
+renderQuestion();
 
-    const element =
-        document.getElementById(id);
-
-    if(!element) return;
-
-    element.scrollIntoView({
-        behavior:"smooth"
-    });
-
-}
-
-
-/* =========================================================
-   RESET
-========================================================= */
-
-function resetAll(){
-
-    if(
-        !confirm(
-            "Biztosan újrakezded a kérdőívet?"
-        )
-    ){
-        return;
-    }
-
-
-    document
-        .querySelectorAll(
-            'input[type="radio"]'
-        )
-        .forEach(input=>{
-            input.checked=false;
-        });
-
-
-    document.getElementById("resultSection")
-        .style.display="none";
-
-
-    document.getElementById("progressBar")
-        .style.width="0%";
-
-
-    document.getElementById("progressText")
-        .textContent="0%";
-
-
-    window.scrollTo({
-        top:0,
-        behavior:"smooth"
-    });
-
-}
+renderHistory();
 
 </script>
 
