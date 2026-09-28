@@ -1626,16 +1626,16 @@
         formData.append("image", file);
 
 
-        try {
+    try {
 
-           const response =
-    await fetch(
+    const response = await fetch(
         "https://mindscope-com.onrender.com/api/analyze-image",
         {
             method: "POST",
             body: formData
         }
     );
+
 
 
                     method: "POST",
